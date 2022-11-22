@@ -3,6 +3,17 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+//def getKeys() {
+//    def keyFile = file("keys.properties")
+//    def properties = new Properties()
+//    properties.load(new FileInputStream(keyFile))
+//    return properties
+//}
+
+def keyFile = file("keys.properties")
+def properties = new Properties()
+properties.load(new FileInputStream(keyFile))
+
 android {
     namespace 'com.example.sfutransiter'
     compileSdk 33
@@ -21,6 +32,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'TRANSLINK_API_KEY', properties['TRANSLINK_API_KEY']
         }
     }
     buildFeatures {
