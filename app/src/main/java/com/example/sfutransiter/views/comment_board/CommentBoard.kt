@@ -23,5 +23,7 @@ class CommentBoard : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() = CommentBoard()
+
+        val TAG = CommentBoard::class.java.simpleName
     }
 }

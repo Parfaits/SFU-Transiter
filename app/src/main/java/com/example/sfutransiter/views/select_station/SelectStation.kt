@@ -23,5 +23,7 @@ class SelectStation : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() = SelectStation()
+
+        val TAG = SelectStation::class.java.simpleName
     }
 }

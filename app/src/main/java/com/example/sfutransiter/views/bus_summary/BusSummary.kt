@@ -23,5 +23,7 @@ class BusSummary : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() = BusSummary()
+
+        val TAG = BusSummary::class.java.simpleName
     }
 }
