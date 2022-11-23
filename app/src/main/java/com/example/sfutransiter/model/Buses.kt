@@ -6,7 +6,7 @@ data class Buses(
     val buses: ArrayList<String>,
     val bus: String,
     val vehicleNo: Int,
-    val tripId: Long,
+    val tripId: Int,
     val routeNo: Int,
     val direction: String,
     val pattern: String,
