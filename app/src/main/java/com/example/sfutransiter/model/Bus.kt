@@ -3,7 +3,7 @@ package com.example.sfutransiter.model
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-data class Buses(
+data class Bus(
     @SerializedName("VehicleNo")
     val vehicleNo: String,
     @SerializedName("TripId")

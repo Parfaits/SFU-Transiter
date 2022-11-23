@@ -9,7 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import com.example.sfutransiter.backend.RetrofitAPI
 import com.example.sfutransiter.databinding.FragmentBusSummaryBinding
-import com.example.sfutransiter.model.Buses
+import com.example.sfutransiter.model.Bus
 import com.example.sfutransiter.model.MyViewModelFactory
 import com.example.sfutransiter.model.TransitViewModel
 import com.example.sfutransiter.repository.Repository
@@ -21,7 +21,7 @@ class BusSummary : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var routeId: String
-    private lateinit var buses: LiveData<Array<Buses>>
+    private lateinit var buses: LiveData<Array<Bus>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
