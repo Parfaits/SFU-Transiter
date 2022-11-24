@@ -4,11 +4,14 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import com.example.sfutransiter.R
 import com.example.sfutransiter.databinding.ActivityMainBinding
+import com.example.sfutransiter.util.Constants
 import com.example.sfutransiter.util.Util
 import com.example.sfutransiter.views.bus_summary.BusSummary
 import com.example.sfutransiter.views.components.BaseActivity
+import com.example.sfutransiter.views.components.DoNotShowAgainAlertDialog
 import com.example.sfutransiter.views.search_by.SearchBy
 import com.example.sfutransiter.views.select_bus.SelectBus
+import kotlin.properties.Delegates
 
 class MainActivity : BaseActivity(),
     MainFragment.MainFragmentInterface,
@@ -17,13 +20,28 @@ class MainActivity : BaseActivity(),
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
+    private var isShowDisclaimer by Delegates.notNull<Boolean>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Util.checkPermissions(this)
-
+        isShowDisclaimer = getSharedPreferences(
+            Constants.Pref.PREF_NAME,
+            MODE_PRIVATE
+        ).getBoolean(Constants.Pref.SHOW_DIALOG, true)
+        if (isShowDisclaimer)
+            showDisclaimerDialog()
         addFragment(R.id.mainFragmentContainer, MainFragment.newInstance(), MainFragment.TAG, false)
+    }
+
+    private fun showDisclaimerDialog() {
+        DoNotShowAgainAlertDialog.Builder().apply {
+            setTitle(getString(R.string.disclaimer))
+            setMessage(getString(R.string.translink_disclaimer))
+            setPositiveButton(getString(R.string.i_understand), null)
+        }.create().show(supportFragmentManager, DoNotShowAgainAlertDialog.TAG)
     }
 
     override fun onRequestPermissionsResult(
