@@ -8,6 +8,7 @@ import com.example.sfutransiter.model.BusStop
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import retrofit2.Retrofit
 
 /**
@@ -21,16 +22,16 @@ class Repository(retrofit: Retrofit) {
      * Get the buses by route
      * @param routeId the route (e.g. 145)
      */
-    fun getBusesByRoute(routeId: String): MutableLiveData<Array<Bus>> {
-        val busesLiveData = MutableLiveData<Array<Bus>>()
+    fun getBusesByRoute(routeId: String): MutableLiveData<Response<Array<Bus>>> {
+        val busesLiveData = MutableLiveData<Response<Array<Bus>>>()
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = api.getBusesByRoute(routeId)
-                if (response.isSuccessful) {
-                    busesLiveData.postValue(response.body()!!)
-                } else {
+                if (!response.isSuccessful) {
+                    // Caller should handle error responses
                     Log.e(Repository::class.java.simpleName, "getBuses: $response")
                 }
+                busesLiveData.postValue(response)
             } catch (e: java.lang.Exception) {
                 Log.e(Repository::class.java.simpleName, "getBuses: Failed to get data, $e")
             }
@@ -50,16 +51,16 @@ class Repository(retrofit: Retrofit) {
         long: Double,
         radius: Int? = null,
         routeNo: String? = null
-    ): MutableLiveData<Array<BusStop>> {
-        val stopsLiveData = MutableLiveData<Array<BusStop>>()
+    ): MutableLiveData<Response<Array<BusStop>>> {
+        val stopsLiveData = MutableLiveData<Response<Array<BusStop>>>()
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = api.getStopsNear(lat, long, radius, routeNo)
-                if (response.isSuccessful) {
-                    stopsLiveData.postValue(response.body()!!)
-                } else {
+                if (!response.isSuccessful) {
+                    // Caller should handle error responses
                     Log.e(Repository::class.java.simpleName, "getStopsNear: $response")
                 }
+                stopsLiveData.postValue(response)
             } catch (e: java.lang.Exception) {
                 Log.e(Repository::class.java.simpleName, "getStopsNear: Failed to get data, $e")
             }

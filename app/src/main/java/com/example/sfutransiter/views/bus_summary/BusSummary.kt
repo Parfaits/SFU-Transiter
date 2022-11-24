@@ -13,6 +13,7 @@ import com.example.sfutransiter.model.Bus
 import com.example.sfutransiter.model.MyViewModelFactory
 import com.example.sfutransiter.model.TransitViewModel
 import com.example.sfutransiter.repository.Repository
+import retrofit2.Response
 
 private const val ARG_ROUTE_ID = "routeId"
 
@@ -21,7 +22,7 @@ class BusSummary : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var routeId: String
-    private lateinit var buses: LiveData<Array<Bus>>
+    private lateinit var buses: LiveData<Response<Array<Bus>>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
