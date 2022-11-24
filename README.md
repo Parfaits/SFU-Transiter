@@ -1,6 +1,6 @@
 # SFU Transiter
 
-### About
+## About
 The ultimate transit app for SFU Students.
 Rate, comment, ride. Use this app to view top rated buses and see what other people think about the ride.
 
@@ -15,6 +15,12 @@ Utilize TransLink’s REST API to receive current bus positions and ETA
 Use network communications to post comments and/or stream other user comments and ratings
 Single bus commutes, no scheduling between buses
 
+### Team members
+- Luke (In Ho) Seo
+- Johnny Doan
+- Kenny Mim
+- Myron Yung
+
 ## Getting started to developing
 Translink API key is required:
 1. clone the reposiory to your work folder
@@ -28,12 +34,6 @@ Translink API key is required:
 4. you are ready to use the Translink api and develop! 😀
 
 see https://www.translink.ca/about-us/doing-business-with-translink/app-developer-resources for more information
-
-### Team members
-- Luke (In Ho) Seo
-- Johnny Doan
-- Kenny Mim
-- Myron Yung
 
 ## Disclaimer
 Some of the data used in this product or service is provided by permission of TransLink. TransLink assumes no responsibility for the accuracy or currency of the Data used in this product or service.

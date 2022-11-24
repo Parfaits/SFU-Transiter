@@ -4,9 +4,9 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import com.example.sfutransiter.R
 import com.example.sfutransiter.databinding.ActivityMainBinding
-import com.example.sfutransiter.util.Constants
 import com.example.sfutransiter.util.Util
 import com.example.sfutransiter.views.bus_summary.BusSummary
+import com.example.sfutransiter.util.Constants
 import com.example.sfutransiter.views.components.BaseActivity
 import com.example.sfutransiter.views.components.DoNotShowAgainAlertDialog
 import com.example.sfutransiter.views.search_by.SearchBy
