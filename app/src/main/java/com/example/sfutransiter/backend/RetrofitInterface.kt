@@ -27,4 +27,6 @@ interface RetrofitInterface {
         @Query("radius") radius: Int?,
         @Query("routeNo") routeNo: String?
     ): Response<Array<BusStop>>
+
+    
 }

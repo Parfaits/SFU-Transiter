@@ -29,7 +29,7 @@ class BusSummary : Fragment() {
         arguments?.let {
             routeId = it.getString(ARG_ROUTE_ID)!!
         }
-        val repo = Repository(RetrofitAPI.getInstance())
+        val repo = Repository(RetrofitAPI.getTransLinkInstance())
         val viewModelFactory = MyViewModelFactory(repo)
         val viewModel = ViewModelProvider(this, viewModelFactory)[TransitViewModel::class.java]
         buses = viewModel.getBusesByRoute(routeId)
