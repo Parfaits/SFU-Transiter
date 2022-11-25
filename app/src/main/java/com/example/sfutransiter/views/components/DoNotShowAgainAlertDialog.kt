@@ -84,9 +84,11 @@ class DoNotShowAgainAlertDialog(private val builder: Builder) : DialogFragment()
         return dialog?.create() ?: throw java.lang.IllegalStateException("Activity cannot be null")
     }
 
-    override fun show(manager: FragmentManager, tag: String?) {
-        if (isShowDialog)
-            super.show(manager, tag)
+    fun showIfAllowed(context: Context, manager: FragmentManager) {
+        if (context.getSharedPreferences(Constants.Pref.PREF_NAME, Context.MODE_PRIVATE)
+                .getBoolean(Constants.Pref.SHOW_DIALOG, true)
+        )
+            show(manager, TAG)
     }
 
     @SuppressLint("InflateParams")

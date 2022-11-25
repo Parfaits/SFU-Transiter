@@ -4,7 +4,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import com.example.sfutransiter.R
 import com.example.sfutransiter.databinding.ActivityMainBinding
-import com.example.sfutransiter.util.Constants
 import com.example.sfutransiter.util.Util
 import com.example.sfutransiter.views.bus_summary.BusSummary
 import com.example.sfutransiter.views.components.BaseActivity
@@ -24,13 +23,7 @@ class MainActivity : BaseActivity(),
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Util.checkPermissions(this)
-        if (getSharedPreferences(
-                Constants.Pref.PREF_NAME,
-                MODE_PRIVATE
-            ).getBoolean(Constants.Pref.SHOW_DIALOG, true)
-        ) {
-            showDisclaimerDialog()
-        }
+        showDisclaimerDialog()
         addFragment(R.id.mainFragmentContainer, MainFragment.newInstance(), MainFragment.TAG, false)
     }
 
@@ -39,7 +32,7 @@ class MainActivity : BaseActivity(),
             setTitle(getString(R.string.disclaimer))
             setMessage(getString(R.string.translink_disclaimer))
             setPositiveButton(getString(R.string.i_understand), null)
-        }.create().show(supportFragmentManager, DoNotShowAgainAlertDialog.TAG)
+        }.create().showIfAllowed(this, supportFragmentManager)
     }
 
     override fun onRequestPermissionsResult(
