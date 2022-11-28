@@ -1,14 +1,9 @@
 package com.example.sfutransiter.backend
 
 import com.example.sfutransiter.BuildConfig
-import com.example.sfutransiter.model.Bus
-import com.example.sfutransiter.model.BusStop
-import com.example.sfutransiter.model.StopEstimate
+import com.example.sfutransiter.model.*
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface RetrofitInterface {
     interface TLink {
@@ -45,6 +40,20 @@ interface RetrofitInterface {
     }
 
     interface AWS {
+        @Headers("Content-Type: application/json")
+        @POST("busStop/{busStop}")
+        suspend fun insertBusStopReview(
+            @Path("busStop") stopNo: String,
+            @Body body: BusStopReview.Request
+        ): Response<BusStopReview.Response>
+//        'DELETE:/busStop/{busStop}/stopReview/{stopReviewRn}': require('./transiter/stop_review/transiter_stop_review_remove')
+//
+//        // Update
+//        'PUT:/busStop/{busStop}/stopReview/{stopReviewRn}': require('./transiter/stop_review/transiter_stop_review_update')
+//
+//        // List
+//        'GET:/busStop/{busStop}/stop_reviews': require('./transiter/stop_review/query/transiter_stop_review_list')
+
         @GET("ping")
         suspend fun ping(): Response<Void>
     }
