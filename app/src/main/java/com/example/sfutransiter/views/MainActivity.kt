@@ -10,11 +10,12 @@ import com.example.sfutransiter.views.components.BaseActivity
 import com.example.sfutransiter.views.components.DoNotShowAgainAlertDialog
 import com.example.sfutransiter.views.search_by.SearchBy
 import com.example.sfutransiter.views.select_bus.SelectBus
+import com.example.sfutransiter.views.select_station.SelectStation
 
 class MainActivity : BaseActivity(),
     MainFragment.MainFragmentInterface,
     SearchBy.SearchByFragmentInterface,
-    SelectBus.SelectBusInterface {
+    SelectBus.SelectBusInterface, SelectStation.SelectStationInterface {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
@@ -57,6 +58,10 @@ class MainActivity : BaseActivity(),
 
     override fun swapToSelectBus() {
         replaceFragment(R.id.mainFragmentContainer, SelectBus.newInstance(), SelectBus.TAG)
+    }
+
+    override fun swapToSelectStation() {
+        replaceFragment(R.id.mainFragmentContainer, SelectStation.newInstance(), SelectStation.TAG)
     }
 
     override fun swapToBusSummary(routeId: String) {
