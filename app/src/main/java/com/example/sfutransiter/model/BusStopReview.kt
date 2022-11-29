@@ -3,9 +3,12 @@ package com.example.sfutransiter.model
 import com.google.gson.annotations.SerializedName
 
 class BusStopReview() {
+    /**
+     * @param authorRn Required for updating non anonymous reviews
+     */
     data class Request(
         @SerializedName("bus")
-        val routeNo: String,
+        val routeNo: String?,
         @SerializedName("comment")
         val comment: String? = null,
         @SerializedName("safety")
@@ -30,6 +33,10 @@ class BusStopReview() {
         @SerializedName("crowd")
         val crowd: Int,
         @SerializedName("author")
-        val author: User
+        val author: User,
+        @SerializedName("status")
+        val status: String
     )
+
+    data class ResponseList(@SerializedName("list") val list: ArrayList<Response>)
 }

@@ -46,13 +46,20 @@ interface RetrofitInterface {
             @Path("busStop") stopNo: String,
             @Body body: BusStopReview.Request
         ): Response<BusStopReview.Response>
-//        'DELETE:/busStop/{busStop}/stopReview/{stopReviewRn}': require('./transiter/stop_review/transiter_stop_review_remove')
-//
-//        // Update
-//        'PUT:/busStop/{busStop}/stopReview/{stopReviewRn}': require('./transiter/stop_review/transiter_stop_review_update')
-//
-//        // List
-//        'GET:/busStop/{busStop}/stop_reviews': require('./transiter/stop_review/query/transiter_stop_review_list')
+
+        @Headers("Content-Type: application/json")
+        @PUT("busStop/{busStop}/stopReview/{stopReviewRn}")
+        suspend fun updateBusStopReview(
+            @Path("busStop") stopNo: String,
+            @Path("stopReviewRn") stopReviewRn: String,
+            @Body body: BusStopReview.Request
+        ): Response<BusStopReview.Response>
+
+        @Headers("Content-Type: application/json")
+        @GET("busStop/{busStop}/stop_reviews")
+        suspend fun listBusStopReviews(
+            @Path("busStop") stopNo: String
+        ): Response<BusStopReview.ResponseList>
 
         @GET("ping")
         suspend fun ping(): Response<Void>
