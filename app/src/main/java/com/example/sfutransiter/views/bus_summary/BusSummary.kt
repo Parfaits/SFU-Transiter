@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
+import com.example.sfutransiter.R
 import com.example.sfutransiter.backend.RetrofitAPI
 import com.example.sfutransiter.databinding.FragmentBusSummaryBinding
 import com.example.sfutransiter.model.Bus
@@ -55,6 +56,7 @@ class BusSummary : Fragment() {
         val awsViewModelFactory = MyViewModelFactory(awsRepo)
         val awsViewModel =
             ViewModelProvider(this, awsViewModelFactory)[BusReviewViewModel::class.java]
+
     }
 
     override fun onCreateView(
@@ -67,8 +69,18 @@ class BusSummary : Fragment() {
         binding.txtBusTitle.text = routeId
         setupRating()
         setupCommentBtn()
+        setupList()
 
         return binding.root
+    }
+
+    private fun setupList() {
+        buses.observe(viewLifecycleOwner) {
+            if (!it.isSuccessful) return@observe
+            val buss = it.body()!!
+            binding.txtBusTotal.text = getString(R.string.currently_n_buses_on_road, buss.size)
+            binding.recyclerBuses.adapter = BusRecyclerAdapter(buss)
+        }
     }
 
     private fun setupCommentBtn() {
@@ -78,7 +90,9 @@ class BusSummary : Fragment() {
     }
 
     private fun setupRating() {
-
+//        binding.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+//            // TODO save to db
+//        }
     }
 
     interface BusSummaryInterface {

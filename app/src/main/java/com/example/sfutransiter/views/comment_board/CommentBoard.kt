@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.sfutransiter.databinding.FragmentCommentBoardBinding
-import com.example.sfutransiter.views.bus_summary.BusSummary
 
 private const val ARG_ROUTE_ID = "routeId"
 
@@ -38,7 +37,7 @@ class CommentBoard : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance(routeId: String) =
-            BusSummary().apply {
+            CommentBoard().apply {
                 arguments = Bundle().apply {
                     putString(ARG_ROUTE_ID, routeId)
                 }
