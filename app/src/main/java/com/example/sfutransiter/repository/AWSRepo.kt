@@ -61,8 +61,6 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
                     Log.e(Repository::class.java.simpleName, "updateBusStopReview: $response")
                 }
                 stopReviewLiveData.postValue(response)
-                // TODO delete
-//                Log.d("swag", "updateBusStopReview: $response, ${response.body()}")
             } catch (e: java.lang.Exception) {
                 Log.e(AWSRepo::class.java.simpleName, "updateBusStopReview: Failed, $e")
             }
@@ -86,8 +84,6 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
                     Log.e(Repository::class.java.simpleName, "listBusStopReview: $response")
                 }
                 stopReviewLiveData.postValue(response)
-                // TODO delete
-                Log.d("swag", "listBusStopReviews: $response, ${response.body()}")
             } catch (e: java.lang.Exception) {
                 Log.e(AWSRepo::class.java.simpleName, "listBusStopReview: Failed, $e")
             }

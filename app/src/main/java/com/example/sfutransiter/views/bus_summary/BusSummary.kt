@@ -44,8 +44,6 @@ class BusSummary : Fragment() {
         val awsViewModelFactory = MyViewModelFactory(awsRepo)
         val awsViewModel =
             ViewModelProvider(this, awsViewModelFactory)[BusReviewViewModel::class.java]
-//        awsViewModel.updateBusStopReview("52807", "stopReviewRn-V1-YvCXXjUm0n48", BusStopReview.Request("144", "bruh", Safety.ORANGE.level, 2))
-        awsViewModel.listBusStopReviews("52807")
     }
 
     override fun onCreateView(
