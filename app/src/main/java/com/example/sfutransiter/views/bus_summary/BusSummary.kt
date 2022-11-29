@@ -1,6 +1,8 @@
 package com.example.sfutransiter.views.bus_summary
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +18,7 @@ import com.example.sfutransiter.model.view_model.MyViewModelFactory
 import com.example.sfutransiter.model.view_model.TransitViewModel
 import com.example.sfutransiter.repository.AWSRepo
 import com.example.sfutransiter.repository.TLinkRepo
+import com.example.sfutransiter.views.MainFragment
 import retrofit2.Response
 
 private const val ARG_ROUTE_ID = "routeId"
@@ -24,9 +27,17 @@ class BusSummary : Fragment() {
     private var _binding: FragmentBusSummaryBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var busSummaryInterface: BusSummaryInterface
     private lateinit var routeId: String
     private lateinit var buses: LiveData<Response<Array<Bus>>>
     private lateinit var stopEstimates: LiveData<Response<Array<StopEstimate>>>
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is BusSummaryInterface)
+            busSummaryInterface = context
+        else Log.e(MainFragment.TAG, "onAttach: MainActivity must implement BusSummaryInterface")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +63,26 @@ class BusSummary : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentBusSummaryBinding.inflate(inflater, container, false)
+
+        binding.txtBusTitle.text = routeId
+        setupRating()
+        setupCommentBtn()
+
         return binding.root
+    }
+
+    private fun setupCommentBtn() {
+        binding.btnComments.setOnClickListener {
+            busSummaryInterface.swapToCommentBoard(routeId)
+        }
+    }
+
+    private fun setupRating() {
+
+    }
+
+    interface BusSummaryInterface {
+        fun swapToCommentBoard(routeNo: String)
     }
 
     companion object {
