@@ -6,16 +6,17 @@ import com.example.sfutransiter.R
 import com.example.sfutransiter.databinding.ActivityMainBinding
 import com.example.sfutransiter.util.Util
 import com.example.sfutransiter.views.bus_summary.BusSummary
+import com.example.sfutransiter.views.comment_board.CommentBoard
 import com.example.sfutransiter.views.components.BaseActivity
 import com.example.sfutransiter.views.components.DoNotShowAgainAlertDialog
 import com.example.sfutransiter.views.search_by.SearchBy
 import com.example.sfutransiter.views.select_bus.SelectBus
-import com.example.sfutransiter.views.select_station.SelectStation
 
 class MainActivity : BaseActivity(),
     MainFragment.MainFragmentInterface,
     SearchBy.SearchByFragmentInterface,
-    SelectBus.SelectBusInterface, SelectStation.SelectStationInterface {
+    SelectBus.SelectBusInterface,
+    BusSummary.BusSummaryInterface {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
@@ -60,11 +61,15 @@ class MainActivity : BaseActivity(),
         replaceFragment(R.id.mainFragmentContainer, SelectBus.newInstance(), SelectBus.TAG)
     }
 
-    override fun swapToSelectStation() {
-        replaceFragment(R.id.mainFragmentContainer, SelectStation.newInstance(), SelectStation.TAG)
-    }
-
     override fun swapToBusSummary(routeId: String) {
         replaceFragment(R.id.mainFragmentContainer, BusSummary.newInstance(routeId), BusSummary.TAG)
+    }
+
+    override fun swapToCommentBoard(routeNo: String) {
+        replaceFragment(
+            R.id.mainFragmentContainer,
+            CommentBoard.newInstance(routeNo),
+            CommentBoard.TAG
+        )
     }
 }

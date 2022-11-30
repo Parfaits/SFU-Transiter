@@ -4,14 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.sfutransiter.R
 import com.example.sfutransiter.databinding.FragmentCommentBoardBinding
+
+private const val ARG_ROUTE_ID = "routeId"
 
 class CommentBoard : Fragment() {
     private var _binding: FragmentCommentBoardBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var routeId: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            routeId = it.getString(ARG_ROUTE_ID)!!
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,16 +28,20 @@ class CommentBoard : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCommentBoardBinding.inflate(inflater, container, false)
-        val busName : TextView = binding.root.findViewById(R.id.txtBusTitle)
-        arguments?.let {
-            busName.text = it.getString("routeID")!!
-        }
+
+        binding.txtBusTitle3.text = routeId
+
         return binding.root
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() = CommentBoard()
+        fun newInstance(routeId: String) =
+            CommentBoard().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_ROUTE_ID, routeId)
+                }
+            }
 
         val TAG: String = CommentBoard::class.java.simpleName
     }
