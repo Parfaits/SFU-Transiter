@@ -30,6 +30,14 @@ class BusReviewViewModel(private val repository: AWSRepo) : ViewModel() {
         return busStopReview
     }
 
+    fun deleteBusStopReview(
+        stopNo: String,
+        stopReviewRn: String,
+    ): LiveData<Response<BusStopReview.Response>> {
+        busStopReview = repository.deleteBusStopReview(stopNo, stopReviewRn)
+        return busStopReview
+    }
+
     fun listBusStopReviews(
         stopNo: String,
     ): LiveData<Response<BusStopReview.ResponseList>> {

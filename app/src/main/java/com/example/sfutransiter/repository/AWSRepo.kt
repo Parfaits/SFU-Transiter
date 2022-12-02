@@ -69,6 +69,31 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
     }
 
     /**
+     * Deletes a bus stop review from a user
+     * @param stopNo the stop identifier (5 digits)
+     * @param stopReviewRn the stop review resource name to delete
+     */
+    fun deleteBusStopReview(
+        stopNo: String,
+        stopReviewRn: String,
+    ): MutableLiveData<Response<BusStopReview.Response>> {
+        val stopReviewLiveData = MutableLiveData<Response<BusStopReview.Response>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = aws.deleteBusStopReview(stopNo, stopReviewRn)
+                if (!response.isSuccessful) {
+                    // Caller should handle error responses
+                    Log.e(Repository::class.java.simpleName, "deleteBusStopReview: $response")
+                }
+                stopReviewLiveData.postValue(response)
+            } catch (e: java.lang.Exception) {
+                Log.e(AWSRepo::class.java.simpleName, "deleteBusStopReview: Failed, $e")
+            }
+        }
+        return stopReviewLiveData
+    }
+
+    /**
      * Gets a list of bus stop reviews
      * @param stopNo the stop identifier (5 digits)
      */

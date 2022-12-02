@@ -63,6 +63,13 @@ interface RetrofitInterface {
         ): Response<BusStopReview.Response>
 
         @Headers("Content-Type: application/json")
+        @DELETE("busStop/{busStop}/stopReview/{stopReviewRn}")
+        suspend fun deleteBusStopReview(
+            @Path("busStop") stopNo: String,
+            @Path("stopReviewRn") stopReviewRn: String,
+        ): Response<BusStopReview.Response>
+
+        @Headers("Content-Type: application/json")
         @GET("busStop/{busStop}/stop_reviews")
         suspend fun listBusStopReviews(
             @Path("busStop") stopNo: String
