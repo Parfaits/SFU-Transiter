@@ -204,7 +204,7 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
     fun deleteUser(
         userName: String,
         userRn: String,
-        body: User.DeleteRequestBody
+        body: User.RequestBodyAuth
     ): MutableLiveData<Response<User.Response>> {
         val userLiveData = MutableLiveData<Response<User.Response>>()
         CoroutineScope(Dispatchers.IO).launch {
@@ -220,6 +220,32 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
             }
         }
         return userLiveData
+    }
+
+    /**
+     * Checks if user is authorized
+     * @param userName the user's user name
+     * @param userRn the user's unique resource name
+     */
+    fun checkUserAuthorized(
+        userName: String,
+        userRn: String,
+        body: User.RequestBodyAuth
+    ): MutableLiveData<Response<User.ResponseAuth>> {
+        val authLiveData = MutableLiveData<Response<User.ResponseAuth>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = aws.checkUserAuthorized(userName, userRn, body)
+                if (!response.isSuccessful) {
+                    // Caller should handle error responses
+                    Log.e(Repository::class.java.simpleName, "checkUserAuthorized: $response")
+                }
+                authLiveData.postValue(response)
+            } catch (e: java.lang.Exception) {
+                Log.e(AWSRepo::class.java.simpleName, "checkUserAuthorized: Failed, $e")
+            }
+        }
+        return authLiveData
     }
 
     /***********************************************************************************************

@@ -9,6 +9,7 @@ import retrofit2.Response
 
 class UserViewModel(private val repository: AWSRepo) : ViewModel() {
     private var user = MutableLiveData<Response<User.Response>>()
+    private var auth = MutableLiveData<Response<User.ResponseAuth>>()
 
     fun createUser(
         body: User.RequestBody,
@@ -37,9 +38,18 @@ class UserViewModel(private val repository: AWSRepo) : ViewModel() {
     fun deleteUser(
         userName: String,
         userRn: String,
-        body: User.DeleteRequestBody
+        body: User.RequestBodyAuth
     ): LiveData<Response<User.Response>> {
         user = repository.deleteUser(userName, userRn, body)
         return user
+    }
+
+    fun checkUserAuthorized(
+        userName: String,
+        userRn: String,
+        body: User.RequestBodyAuth
+    ): LiveData<Response<User.ResponseAuth>> {
+        auth = repository.checkUserAuthorized(userName, userRn, body)
+        return auth
     }
 }

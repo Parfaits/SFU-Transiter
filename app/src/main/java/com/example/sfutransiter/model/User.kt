@@ -19,9 +19,14 @@ class User {
         val lastName: String,
     )
 
-    data class DeleteRequestBody(
+    /**
+     * @param newPassword Required for updating password
+     */
+    data class RequestBodyAuth(
         @SerializedName("password")
-        val password: String
+        val password: String,
+        @SerializedName("newPassword")
+        val newPassword: String? = null,
     )
 
     data class Response(
@@ -37,5 +42,16 @@ class User {
         val lastName: String,
         @SerializedName("status")
         val status: String,
+    )
+
+    data class ResponseAuth(
+        @SerializedName("userRn")
+        val userRn: String,
+        @SerializedName("userName")
+        val userName: String,
+        @SerializedName("password")
+        val password: String,
+        @SerializedName("authorized")
+        val authorized: Boolean,
     )
 }

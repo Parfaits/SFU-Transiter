@@ -103,8 +103,16 @@ interface RetrofitInterface {
         suspend fun deleteUser(
             @Path("userName") userName: String,
             @Path("userRn") userRn: String,
-            @Body body: User.DeleteRequestBody
+            @Body body: User.RequestBodyAuth
         ): Response<User.Response>
+
+        @Headers("Content-Type: application/json")
+        @GET("userAuth/userName/{userName}/userRn/{userRn}")
+        suspend fun checkUserAuthorized(
+            @Path("userName") userName: String,
+            @Path("userRn") userRn: String,
+            @Body body: User.RequestBodyAuth
+        ): Response<User.ResponseAuth>
 
         @GET("ping")
         suspend fun ping(): Response<Void>
