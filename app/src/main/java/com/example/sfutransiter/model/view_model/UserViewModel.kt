@@ -44,12 +44,23 @@ class UserViewModel(private val repository: AWSRepo) : ViewModel() {
         return user
     }
 
+    // =====================
+    // AUTH
     fun checkUserAuthorized(
         userName: String,
         userRn: String,
         body: User.RequestBodyAuth
     ): LiveData<Response<User.ResponseAuth>> {
         auth = repository.checkUserAuthorized(userName, userRn, body)
+        return auth
+    }
+
+    fun updateUserPassword(
+        userName: String,
+        userRn: String,
+        body: User.RequestBodyAuth
+    ): LiveData<Response<User.ResponseAuth>> {
+        auth = repository.updateUserPassword(userName, userRn, body)
         return auth
     }
 }

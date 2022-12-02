@@ -106,9 +106,19 @@ interface RetrofitInterface {
             @Body body: User.RequestBodyAuth
         ): Response<User.Response>
 
+        // ==============
+        // AUTH
         @Headers("Content-Type: application/json")
         @GET("userAuth/userName/{userName}/userRn/{userRn}")
         suspend fun checkUserAuthorized(
+            @Path("userName") userName: String,
+            @Path("userRn") userRn: String,
+            @Body body: User.RequestBodyAuth
+        ): Response<User.ResponseAuth>
+
+        @Headers("Content-Type: application/json")
+        @PUT("userAuth/userName/{userName}/userRn/{userRn}")
+        suspend fun updateUserPassword(
             @Path("userName") userName: String,
             @Path("userRn") userRn: String,
             @Body body: User.RequestBodyAuth

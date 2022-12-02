@@ -200,6 +200,7 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
      * Deletes a user
      * @param userName the user's user name
      * @param userRn the user's unique resource name
+     * @param body [User.RequestBodyAuth] object
      */
     fun deleteUser(
         userName: String,
@@ -222,10 +223,14 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
         return userLiveData
     }
 
+    // =================
+    // AUTH
+
     /**
      * Checks if user is authorized
      * @param userName the user's user name
      * @param userRn the user's unique resource name
+     * @param body [User.RequestBodyAuth] object
      */
     fun checkUserAuthorized(
         userName: String,
@@ -243,6 +248,33 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
                 authLiveData.postValue(response)
             } catch (e: java.lang.Exception) {
                 Log.e(AWSRepo::class.java.simpleName, "checkUserAuthorized: Failed, $e")
+            }
+        }
+        return authLiveData
+    }
+
+    /**
+     * Checks if user is authorized
+     * @param userName the user's user name
+     * @param userRn the user's unique resource name
+     * @param body [User.RequestBodyAuth] object
+     */
+    fun updateUserPassword(
+        userName: String,
+        userRn: String,
+        body: User.RequestBodyAuth
+    ): MutableLiveData<Response<User.ResponseAuth>> {
+        val authLiveData = MutableLiveData<Response<User.ResponseAuth>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = aws.updateUserPassword(userName, userRn, body)
+                if (!response.isSuccessful) {
+                    // Caller should handle error responses
+                    Log.e(Repository::class.java.simpleName, "updateUserPassword: $response")
+                }
+                authLiveData.postValue(response)
+            } catch (e: java.lang.Exception) {
+                Log.e(AWSRepo::class.java.simpleName, "updateUserPassword: Failed, $e")
             }
         }
         return authLiveData
