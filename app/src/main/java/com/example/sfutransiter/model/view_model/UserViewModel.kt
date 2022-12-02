@@ -16,4 +16,12 @@ class UserViewModel(private val repository: AWSRepo) : ViewModel() {
         user = repository.createUser(body)
         return user
     }
+
+    fun getUser(
+        userName: String,
+        userRn: String
+    ): LiveData<Response<User.Response>> {
+        user = repository.getUser(userName, userRn)
+        return user
+    }
 }

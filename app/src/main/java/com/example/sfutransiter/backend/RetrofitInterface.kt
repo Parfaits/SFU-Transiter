@@ -83,6 +83,13 @@ interface RetrofitInterface {
             @Body body: User.RequestBody
         ): Response<User.Response>
 
+        @Headers("Content-Type: application/json")
+        @GET("user/userName/{userName}/userRn/{userRn}")
+        suspend fun getUser(
+            @Path("userName") userName: String,
+            @Path("userRn") userRn: String
+        ): Response<User.Response>
+
         @GET("ping")
         suspend fun ping(): Response<Void>
     }

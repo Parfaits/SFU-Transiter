@@ -145,6 +145,35 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
     }
 
     /**
+     * Gets a user from the DB
+     * @param userName the user's user name
+     * @param userRn the user's unique resource name
+     */
+    fun getUser(
+        userName: String,
+        userRn: String
+    ): MutableLiveData<Response<User.Response>> {
+        val userLiveData = MutableLiveData<Response<User.Response>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = aws.getUser(userName, userRn)
+                if (!response.isSuccessful) {
+                    // Caller should handle error responses
+                    Log.e(Repository::class.java.simpleName, "getUser: $response")
+                }
+                userLiveData.postValue(response)
+            } catch (e: java.lang.Exception) {
+                Log.e(AWSRepo::class.java.simpleName, "getUser: Failed, $e")
+            }
+        }
+        return userLiveData
+    }
+
+    /***********************************************************************************************
+     * MISC
+     */
+
+    /**
      * Pings the connection of AWS server
      */
     fun ping() {
