@@ -19,6 +19,11 @@ class User {
         val lastName: String,
     )
 
+    data class DeleteRequestBody(
+        @SerializedName("password")
+        val password: String
+    )
+
     data class Response(
         @SerializedName("userRn")
         val userRn: String,

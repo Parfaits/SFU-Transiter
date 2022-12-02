@@ -98,6 +98,14 @@ interface RetrofitInterface {
             @Body body: User.RequestBody
         ): Response<User.Response>
 
+        @Headers("Content-Type: application/json")
+        @PUT("user/userName/{userName}/userRn/{userRn}")
+        suspend fun deleteUser(
+            @Path("userName") userName: String,
+            @Path("userRn") userRn: String,
+            @Body body: User.DeleteRequestBody
+        ): Response<User.Response>
+
         @GET("ping")
         suspend fun ping(): Response<Void>
     }

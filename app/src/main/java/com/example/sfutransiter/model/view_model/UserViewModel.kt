@@ -33,4 +33,13 @@ class UserViewModel(private val repository: AWSRepo) : ViewModel() {
         user = repository.updateUser(userName, userRn, body)
         return user
     }
+
+    fun deleteUser(
+        userName: String,
+        userRn: String,
+        body: User.DeleteRequestBody
+    ): LiveData<Response<User.Response>> {
+        user = repository.deleteUser(userName, userRn, body)
+        return user
+    }
 }

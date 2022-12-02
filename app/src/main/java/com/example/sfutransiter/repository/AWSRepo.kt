@@ -196,6 +196,32 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
         return userLiveData
     }
 
+    /**
+     * Deletes a user
+     * @param userName the user's user name
+     * @param userRn the user's unique resource name
+     */
+    fun deleteUser(
+        userName: String,
+        userRn: String,
+        body: User.DeleteRequestBody
+    ): MutableLiveData<Response<User.Response>> {
+        val userLiveData = MutableLiveData<Response<User.Response>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = aws.deleteUser(userName, userRn, body)
+                if (!response.isSuccessful) {
+                    // Caller should handle error responses
+                    Log.e(Repository::class.java.simpleName, "deleteUser: $response")
+                }
+                userLiveData.postValue(response)
+            } catch (e: java.lang.Exception) {
+                Log.e(AWSRepo::class.java.simpleName, "deleteUser: Failed, $e")
+            }
+        }
+        return userLiveData
+    }
+
     /***********************************************************************************************
      * MISC
      */
