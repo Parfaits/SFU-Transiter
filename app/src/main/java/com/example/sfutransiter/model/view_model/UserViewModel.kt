@@ -24,4 +24,13 @@ class UserViewModel(private val repository: AWSRepo) : ViewModel() {
         user = repository.getUser(userName, userRn)
         return user
     }
+
+    fun updateUser(
+        userName: String,
+        userRn: String,
+        body: User.RequestBody
+    ): LiveData<Response<User.Response>> {
+        user = repository.updateUser(userName, userRn, body)
+        return user
+    }
 }

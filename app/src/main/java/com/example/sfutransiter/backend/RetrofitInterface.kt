@@ -90,6 +90,14 @@ interface RetrofitInterface {
             @Path("userRn") userRn: String
         ): Response<User.Response>
 
+        @Headers("Content-Type: application/json")
+        @PUT("user/userName/{userName}/userRn/{userRn}")
+        suspend fun updateUser(
+            @Path("userName") userName: String,
+            @Path("userRn") userRn: String,
+            @Body body: User.RequestBody
+        ): Response<User.Response>
+
         @GET("ping")
         suspend fun ping(): Response<Void>
     }
