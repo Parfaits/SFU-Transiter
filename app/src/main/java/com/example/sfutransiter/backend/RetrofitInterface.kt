@@ -51,7 +51,7 @@ interface RetrofitInterface {
         @POST("busStop/{busStop}")
         suspend fun insertBusStopReview(
             @Path("busStop") stopNo: String,
-            @Body body: BusStopReview.Request
+            @Body body: BusStopReview.RequestBody
         ): Response<BusStopReview.Response>
 
         @Headers("Content-Type: application/json")
@@ -59,7 +59,7 @@ interface RetrofitInterface {
         suspend fun updateBusStopReview(
             @Path("busStop") stopNo: String,
             @Path("stopReviewRn") stopReviewRn: String,
-            @Body body: BusStopReview.Request
+            @Body body: BusStopReview.RequestBody
         ): Response<BusStopReview.Response>
 
         @Headers("Content-Type: application/json")
@@ -74,6 +74,14 @@ interface RetrofitInterface {
         suspend fun listBusStopReviews(
             @Path("busStop") stopNo: String
         ): Response<BusStopReview.ResponseList>
+
+        // ==========================================================================================
+        // USERS
+        @Headers("Content-Type: application/json")
+        @POST("user")
+        suspend fun createUser(
+            @Body body: User.RequestBody
+        ): Response<User.Response>
 
         @GET("ping")
         suspend fun ping(): Response<Void>

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.sfutransiter.backend.RetrofitInterface
 import com.example.sfutransiter.model.BusStopReview
+import com.example.sfutransiter.model.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,7 +24,7 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
      */
     fun insertBusStopReview(
         stopNo: String,
-        body: BusStopReview.Request
+        body: BusStopReview.RequestBody
     ): MutableLiveData<Response<BusStopReview.Response>> {
         val stopReviewLiveData = MutableLiveData<Response<BusStopReview.Response>>()
         CoroutineScope(Dispatchers.IO).launch {
@@ -50,7 +51,7 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
     fun updateBusStopReview(
         stopNo: String,
         stopReviewRn: String,
-        body: BusStopReview.Request
+        body: BusStopReview.RequestBody
     ): MutableLiveData<Response<BusStopReview.Response>> {
         val stopReviewLiveData = MutableLiveData<Response<BusStopReview.Response>>()
         CoroutineScope(Dispatchers.IO).launch {
@@ -114,6 +115,33 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
             }
         }
         return stopReviewLiveData
+    }
+
+    /***********************************************************************************************
+     * USERS
+     */
+
+    /**
+     * Creates new user with values from [User.RequestBody]
+     * @param body [User.RequestBody] object
+     */
+    fun createUser(
+        body: User.RequestBody,
+    ): MutableLiveData<Response<User.Response>> {
+        val userLiveData = MutableLiveData<Response<User.Response>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = aws.createUser(body)
+                if (!response.isSuccessful) {
+                    // Caller should handle error responses
+                    Log.e(Repository::class.java.simpleName, "createUser: $response")
+                }
+                userLiveData.postValue(response)
+            } catch (e: java.lang.Exception) {
+                Log.e(AWSRepo::class.java.simpleName, "createUser: Failed, $e")
+            }
+        }
+        return userLiveData
     }
 
     /**
