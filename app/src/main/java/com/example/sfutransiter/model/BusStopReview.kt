@@ -16,7 +16,9 @@ class BusStopReview {
         @SerializedName("crowd")
         val crowd: Int,
         @SerializedName("authorRn")
-        val authorRn: String? = null
+        val authorRn: String? = null,
+        @SerializedName("userName")
+        val userName: String? = null,
     )
 
     data class Response(

@@ -12,11 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.sfutransiter.R
 import com.example.sfutransiter.backend.RetrofitAPI
 import com.example.sfutransiter.databinding.FragmentBusSummaryBinding
-import com.example.sfutransiter.model.Bus
-import com.example.sfutransiter.model.StopEstimate
+import com.example.sfutransiter.model.*
 import com.example.sfutransiter.model.view_model.BusReviewViewModel
 import com.example.sfutransiter.model.view_model.MyViewModelFactory
 import com.example.sfutransiter.model.view_model.TransitViewModel
+import com.example.sfutransiter.model.view_model.UserViewModel
 import com.example.sfutransiter.repository.AWSRepo
 import com.example.sfutransiter.repository.TLinkRepo
 import com.example.sfutransiter.views.MainFragment
@@ -50,18 +50,43 @@ class BusSummary : Fragment() {
         val viewModel = ViewModelProvider(this, viewModelFactory)[TransitViewModel::class.java]
 
         val regex = Regex("\\d{5}")
-        if(routeId.matches(regex))
-            buses = viewModel.getBusesByStop(routeId)
+        buses = if (routeId.matches(regex))
+            viewModel.getBusesByStop(routeId)
         else
-            buses = viewModel.getBusesByRoute(routeId)
-        // TODO get stop estimates
-        // stopEstimates = viewModel.getStopEstimates(52807, routeNo = routeId)
+            viewModel.getBusesByRoute(routeId)
 
         val awsRepo = AWSRepo(RetrofitAPI.getAWSInstance())
         val awsViewModelFactory = MyViewModelFactory(awsRepo)
         val awsViewModel =
             ViewModelProvider(this, awsViewModelFactory)[BusReviewViewModel::class.java]
+        val a = awsViewModel.insertBusStopReview(
+            "2",
+            BusStopReview.RequestBody("3", "swag", Safety.GREEN.level, 2)
+        )
+//        a.observe(this) {
+//            Log.d(TAG, "onCreate: ${it.body()}")
+//            awsViewModel.deleteBusStopReview("1", it.body()!!.stopReviewRn)
+//        }
 
+        val userRepo = AWSRepo(RetrofitAPI.getAWSInstance())
+        val userViewModelFactory = MyViewModelFactory(userRepo)
+        val userViewModel =
+            ViewModelProvider(this, userViewModelFactory)[UserViewModel::class.java]
+        val b = userViewModel.createUser(
+            User.RequestBody(
+                "Swag",
+                "123",
+                "Swag@dab.com",
+                "SwagLord",
+                "Jesus"
+            )
+        )
+//        b.observe(this) {
+//            val body = it.body()!!
+//            userViewModel.getUser(body.userName, body.userRn)
+//        }
+//        userViewModel.updateUser(body.userName, body.userRn, User.RequestBody(password = "123", email = "uhhhhhh", firstName = "bruh", lastName = "ok"))
+//        userViewModel.deleteUser(it.)
     }
 
     override fun onCreateView(
