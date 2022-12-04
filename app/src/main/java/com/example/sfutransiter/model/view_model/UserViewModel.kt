@@ -28,19 +28,17 @@ class UserViewModel(private val repository: AWSRepo) : ViewModel() {
 
     fun updateUser(
         userName: String,
-        userRn: String,
         body: User.RequestBody
     ): LiveData<Response<User.Response>> {
-        user = repository.updateUser(userName, userRn, body)
+        user = repository.updateUser(userName, body)
         return user
     }
 
     fun deleteUser(
         userName: String,
-        userRn: String,
         body: User.RequestBodyAuth
     ): LiveData<Response<User.Response>> {
-        user = repository.deleteUser(userName, userRn, body)
+        user = repository.deleteUser(userName, body)
         return user
     }
 
@@ -48,19 +46,17 @@ class UserViewModel(private val repository: AWSRepo) : ViewModel() {
     // AUTH
     fun checkUserAuthorized(
         userName: String,
-        userRn: String,
         body: User.RequestBodyAuth
     ): LiveData<Response<User.ResponseAuth>> {
-        auth = repository.checkUserAuthorized(userName, userRn, body)
+        auth = repository.checkUserAuthorized(userName, body)
         return auth
     }
 
     fun updateUserPassword(
         userName: String,
-        userRn: String,
         body: User.RequestBodyAuth
     ): LiveData<Response<User.ResponseAuth>> {
-        auth = repository.updateUserPassword(userName, userRn, body)
+        auth = repository.updateUserPassword(userName, body)
         return auth
     }
 }

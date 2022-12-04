@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.sfutransiter.backend.RetrofitInterface
 import com.example.sfutransiter.model.BusStopReview
-import com.example.sfutransiter.model.ResponseError
 import com.example.sfutransiter.model.User
-import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -177,18 +175,16 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
     /**
      * Updates a user's information
      * @param userName the user's user name
-     * @param userRn the user's unique resource name
      * @param body [User.RequestBody] object
      */
     fun updateUser(
         userName: String,
-        userRn: String,
         body: User.RequestBody
     ): MutableLiveData<Response<User.Response>> {
         val userLiveData = MutableLiveData<Response<User.Response>>()
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = aws.updateUser(userName, userRn, body)
+                val response = aws.updateUser(userName, body)
                 Log.d("swag", "updateUser: $response, ${response.body()}")
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
@@ -205,18 +201,16 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
     /**
      * Deletes a user
      * @param userName the user's user name
-     * @param userRn the user's unique resource name
      * @param body [User.RequestBodyAuth] object
      */
     fun deleteUser(
         userName: String,
-        userRn: String,
         body: User.RequestBodyAuth
     ): MutableLiveData<Response<User.Response>> {
         val userLiveData = MutableLiveData<Response<User.Response>>()
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = aws.deleteUser(userName, userRn, body)
+                val response = aws.deleteUser(userName, body)
                 Log.d("swag", "deleteUser: $response, ${response.body()}")
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
@@ -236,18 +230,16 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
     /**
      * Checks if user is authorized
      * @param userName the user's user name
-     * @param userRn the user's unique resource name
      * @param body [User.RequestBodyAuth] object
      */
     fun checkUserAuthorized(
         userName: String,
-        userRn: String,
         body: User.RequestBodyAuth
     ): MutableLiveData<Response<User.ResponseAuth>> {
         val authLiveData = MutableLiveData<Response<User.ResponseAuth>>()
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = aws.checkUserAuthorized(userName, userRn, body)
+                val response = aws.checkUserAuthorized(userName, body)
                 Log.d("swag", "checkUserAuthorized: $response, ${response.body()}")
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
@@ -264,18 +256,16 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
     /**
      * Checks if user is authorized
      * @param userName the user's user name
-     * @param userRn the user's unique resource name
      * @param body [User.RequestBodyAuth] object
      */
     fun updateUserPassword(
         userName: String,
-        userRn: String,
         body: User.RequestBodyAuth
     ): MutableLiveData<Response<User.ResponseAuth>> {
         val authLiveData = MutableLiveData<Response<User.ResponseAuth>>()
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = aws.updateUserPassword(userName, userRn, body)
+                val response = aws.updateUserPassword(userName, body)
                 Log.d("swag", "updateUserPassword: $response, ${response.body()}")
                 if (!response.isSuccessful) {
                     // Caller should handle error responses

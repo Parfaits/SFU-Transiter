@@ -91,36 +91,32 @@ interface RetrofitInterface {
         ): Response<User.Response>
 
         @Headers("Content-Type: application/json")
-        @PUT("user/userName/{userName}/userRn/{userRn}")
+        @PUT("user/userName/{userName}")
         suspend fun updateUser(
             @Path("userName") userName: String,
-            @Path("userRn") userRn: String,
             @Body body: User.RequestBody
         ): Response<User.Response>
 
         @Headers("Content-Type: application/json")
-        @PUT("user/userName/{userName}/userRn/{userRn}")
+        @HTTP(method = "DELETE", path = "user/userName/{userName}", hasBody = true)
         suspend fun deleteUser(
             @Path("userName") userName: String,
-            @Path("userRn") userRn: String,
             @Body body: User.RequestBodyAuth
         ): Response<User.Response>
 
         // ==============
         // AUTH
         @Headers("Content-Type: application/json")
-        @GET("userAuth/userName/{userName}/userRn/{userRn}")
+        @HTTP(method = "GET", path = "userAuth/userName/{userName}", hasBody = true)
         suspend fun checkUserAuthorized(
             @Path("userName") userName: String,
-            @Path("userRn") userRn: String,
             @Body body: User.RequestBodyAuth
         ): Response<User.ResponseAuth>
 
         @Headers("Content-Type: application/json")
-        @PUT("userAuth/userName/{userName}/userRn/{userRn}")
+        @PUT("userAuth/userName/{userName}")
         suspend fun updateUserPassword(
             @Path("userName") userName: String,
-            @Path("userRn") userRn: String,
             @Body body: User.RequestBodyAuth
         ): Response<User.ResponseAuth>
 

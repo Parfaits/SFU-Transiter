@@ -12,7 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.sfutransiter.R
 import com.example.sfutransiter.backend.RetrofitAPI
 import com.example.sfutransiter.databinding.FragmentBusSummaryBinding
-import com.example.sfutransiter.model.*
+import com.example.sfutransiter.model.Bus
+import com.example.sfutransiter.model.StopEstimate
+import com.example.sfutransiter.model.User
 import com.example.sfutransiter.model.view_model.BusReviewViewModel
 import com.example.sfutransiter.model.view_model.MyViewModelFactory
 import com.example.sfutransiter.model.view_model.TransitViewModel
@@ -20,7 +22,6 @@ import com.example.sfutransiter.model.view_model.UserViewModel
 import com.example.sfutransiter.repository.AWSRepo
 import com.example.sfutransiter.repository.TLinkRepo
 import com.example.sfutransiter.views.MainFragment
-import com.google.gson.Gson
 import retrofit2.Response
 
 private const val ARG_ROUTE_ID = "routeId"
@@ -60,14 +61,6 @@ class BusSummary : Fragment() {
         val awsViewModelFactory = MyViewModelFactory(awsRepo)
         val awsViewModel =
             ViewModelProvider(this, awsViewModelFactory)[BusReviewViewModel::class.java]
-        val a = awsViewModel.insertBusStopReview(
-            "2",
-            BusStopReview.RequestBody("3", "swag", Safety.GREEN.level, 2)
-        )
-        a.observe(this) {
-            Log.d(TAG, "onCreate: ${it.body()}")
-            awsViewModel.deleteBusStopReview(it.body()!!.stopNo, it.body()!!.stopReviewRn)
-        }
 
         val userRepo = AWSRepo(RetrofitAPI.getAWSInstance())
         val userViewModelFactory = MyViewModelFactory(userRepo)
@@ -75,23 +68,19 @@ class BusSummary : Fragment() {
             ViewModelProvider(this, userViewModelFactory)[UserViewModel::class.java]
         val b = userViewModel.createUser(
             User.RequestBody(
-                "asdf",
+                "ass7",
                 "123",
-                "asaassadfsdfasdfd@dab.com",
+                "ass7@dab.com",
                 "SwagLord",
                 "Jesus"
             )
         )
-//        userViewModel.getUser(body.userName, body.userRn)
-//        userViewModel.deleteUser("Swag", )
+
         b.observe(this) {
 //            Log.d(TAG, "b: ${Gson().fromJson(it.errorBody()!!.string(), ResponseError::class.java)}")
             val body = it.body()!!
-            userViewModel.getUser(body.userName, body.userRn).observe(this) { get ->
-                Log.d(TAG, "onCreate: , ${get.errorBody()!!.string()}")
-            }
-//            userViewModel.updateUser(body.userName, body.userRn, User.RequestBody(password = "123", email = "uhhhhhh", firstName = "bruh", lastName = "ok"))
-//            userViewModel.deleteUser(body.userName, body.userRn, User.RequestBodyAuth("123"))
+//            userViewModel.updateUserPassword(body.userName, User.RequestBodyAuth("123", "swag"))
+            userViewModel.checkUserAuthorized(body.userName, User.RequestBodyAuth("123"))
         }
     }
 
