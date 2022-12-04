@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.sfutransiter.backend.RetrofitInterface
 import com.example.sfutransiter.model.BusStopReview
+import com.example.sfutransiter.model.ResponseError
 import com.example.sfutransiter.model.User
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,7 +34,7 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
                 val response = aws.insertBusStopReview(stopNo, body)
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
-                    Log.e(Repository::class.java.simpleName, "insertBusStopReview: $response")
+                    Log.e(Repository::class.java.simpleName, "insertBusStopReview: $response, ${response.errorBody()!!.string()}")
                 }
                 stopReviewLiveData.postValue(response)
             } catch (e: java.lang.Exception) {
@@ -59,7 +61,7 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
                 val response = aws.updateBusStopReview(stopNo, stopReviewRn, body)
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
-                    Log.e(Repository::class.java.simpleName, "updateBusStopReview: $response")
+                    Log.e(Repository::class.java.simpleName, "updateBusStopReview: $response, ${response.errorBody()!!.string()}")
                 }
                 stopReviewLiveData.postValue(response)
             } catch (e: java.lang.Exception) {
@@ -85,7 +87,7 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
                 Log.d("swag", "deleteBusStopReview: $response, ${response.body()}")
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
-                    Log.e(Repository::class.java.simpleName, "deleteBusStopReview: $response")
+                    Log.e(Repository::class.java.simpleName, "deleteBusStopReview: $response, ${response.errorBody()!!.string()}")
                 }
                 stopReviewLiveData.postValue(response)
             } catch (e: java.lang.Exception) {
@@ -108,7 +110,7 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
                 val response = aws.listBusStopReviews(stopNo)
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
-                    Log.e(Repository::class.java.simpleName, "listBusStopReview: $response")
+                    Log.e(Repository::class.java.simpleName, "listBusStopReview: $response, ${response.errorBody()!!.string()}")
                 }
                 stopReviewLiveData.postValue(response)
             } catch (e: java.lang.Exception) {
@@ -136,7 +138,7 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
                 Log.d("swag", "createUser: $response, ${response.body()}")
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
-                    Log.e(Repository::class.java.simpleName, "createUser: $response")
+                    Log.e(Repository::class.java.simpleName, "createUser: $response, ${response.errorBody()!!.string()}")
                 }
                 userLiveData.postValue(response)
             } catch (e: java.lang.Exception) {
@@ -162,7 +164,7 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
                 Log.d("swag", "getUser: $response, ${response.body()}")
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
-                    Log.e(Repository::class.java.simpleName, "getUser: $response")
+                    Log.e(Repository::class.java.simpleName, "getUser: $response, ${response.errorBody()!!.string()}")
                 }
                 userLiveData.postValue(response)
             } catch (e: java.lang.Exception) {
@@ -190,7 +192,7 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
                 Log.d("swag", "updateUser: $response, ${response.body()}")
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
-                    Log.e(Repository::class.java.simpleName, "updateUser: $response")
+                    Log.e(Repository::class.java.simpleName, "updateUser: $response, ${response.errorBody()!!.string()}")
                 }
                 userLiveData.postValue(response)
             } catch (e: java.lang.Exception) {
@@ -218,7 +220,7 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
                 Log.d("swag", "deleteUser: $response, ${response.body()}")
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
-                    Log.e(Repository::class.java.simpleName, "deleteUser: $response")
+                    Log.e(Repository::class.java.simpleName, "deleteUser: $response, ${response.errorBody()!!.string()}")
                 }
                 userLiveData.postValue(response)
             } catch (e: java.lang.Exception) {
@@ -249,7 +251,7 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
                 Log.d("swag", "checkUserAuthorized: $response, ${response.body()}")
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
-                    Log.e(Repository::class.java.simpleName, "checkUserAuthorized: $response")
+                    Log.e(Repository::class.java.simpleName, "checkUserAuthorized: $response, ${response.errorBody()!!.string()}")
                 }
                 authLiveData.postValue(response)
             } catch (e: java.lang.Exception) {
@@ -277,7 +279,7 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
                 Log.d("swag", "updateUserPassword: $response, ${response.body()}")
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
-                    Log.e(Repository::class.java.simpleName, "updateUserPassword: $response")
+                    Log.e(Repository::class.java.simpleName, "updateUserPassword: $response, ${response.errorBody()!!.string()}")
                 }
                 authLiveData.postValue(response)
             } catch (e: java.lang.Exception) {
@@ -298,7 +300,7 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = aws.ping()
-                Log.i(AWSRepo::class.java.simpleName, "ping: response $response")
+                Log.i(AWSRepo::class.java.simpleName, "ping: response $response, ${response.errorBody()!!.string()}")
             } catch (e: java.lang.Exception) {
                 Log.e(AWSRepo::class.java.simpleName, "ping: Failed, $e")
             }

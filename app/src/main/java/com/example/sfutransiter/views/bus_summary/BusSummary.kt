@@ -20,6 +20,7 @@ import com.example.sfutransiter.model.view_model.UserViewModel
 import com.example.sfutransiter.repository.AWSRepo
 import com.example.sfutransiter.repository.TLinkRepo
 import com.example.sfutransiter.views.MainFragment
+import com.google.gson.Gson
 import retrofit2.Response
 
 private const val ARG_ROUTE_ID = "routeId"
@@ -63,10 +64,10 @@ class BusSummary : Fragment() {
             "2",
             BusStopReview.RequestBody("3", "swag", Safety.GREEN.level, 2)
         )
-//        a.observe(this) {
-//            Log.d(TAG, "onCreate: ${it.body()}")
-//            awsViewModel.deleteBusStopReview("1", it.body()!!.stopReviewRn)
-//        }
+        a.observe(this) {
+            Log.d(TAG, "onCreate: ${it.body()}")
+            awsViewModel.deleteBusStopReview(it.body()!!.stopNo, it.body()!!.stopReviewRn)
+        }
 
         val userRepo = AWSRepo(RetrofitAPI.getAWSInstance())
         val userViewModelFactory = MyViewModelFactory(userRepo)
@@ -74,19 +75,24 @@ class BusSummary : Fragment() {
             ViewModelProvider(this, userViewModelFactory)[UserViewModel::class.java]
         val b = userViewModel.createUser(
             User.RequestBody(
-                "Swag",
+                "asdf",
                 "123",
-                "Swag@dab.com",
+                "asaassadfsdfasdfd@dab.com",
                 "SwagLord",
                 "Jesus"
             )
         )
-//        b.observe(this) {
-//            val body = it.body()!!
-//            userViewModel.getUser(body.userName, body.userRn)
-//        }
-//        userViewModel.updateUser(body.userName, body.userRn, User.RequestBody(password = "123", email = "uhhhhhh", firstName = "bruh", lastName = "ok"))
-//        userViewModel.deleteUser(it.)
+//        userViewModel.getUser(body.userName, body.userRn)
+//        userViewModel.deleteUser("Swag", )
+        b.observe(this) {
+//            Log.d(TAG, "b: ${Gson().fromJson(it.errorBody()!!.string(), ResponseError::class.java)}")
+            val body = it.body()!!
+            userViewModel.getUser(body.userName, body.userRn).observe(this) { get ->
+                Log.d(TAG, "onCreate: , ${get.errorBody()!!.string()}")
+            }
+//            userViewModel.updateUser(body.userName, body.userRn, User.RequestBody(password = "123", email = "uhhhhhh", firstName = "bruh", lastName = "ok"))
+//            userViewModel.deleteUser(body.userName, body.userRn, User.RequestBodyAuth("123"))
+        }
     }
 
     override fun onCreateView(
