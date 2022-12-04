@@ -107,12 +107,13 @@ interface RetrofitInterface {
         // ==============
         // AUTH
         @Headers("Content-Type: application/json")
-        @HTTP(method = "GET", path = "userAuth/userName/{userName}", hasBody = true)
+        @PUT("userAuth/userName/{userName}/auth")
         suspend fun checkUserAuthorized(
             @Path("userName") userName: String,
             @Body body: User.RequestBodyAuth
         ): Response<User.ResponseAuth>
 
+        // TODO backend wrong path param joi schema
         @Headers("Content-Type: application/json")
         @PUT("userAuth/userName/{userName}")
         suspend fun updateUserPassword(

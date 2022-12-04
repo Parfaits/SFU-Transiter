@@ -82,7 +82,6 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = aws.deleteBusStopReview(stopNo, stopReviewRn)
-                Log.d("swag", "deleteBusStopReview: $response, ${response.body()}")
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
                     Log.e(Repository::class.java.simpleName, "deleteBusStopReview: $response, ${response.errorBody()!!.string()}")
@@ -133,7 +132,6 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = aws.createUser(body)
-                Log.d("swag", "createUser: $response, ${response.body()}")
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
                     Log.e(Repository::class.java.simpleName, "createUser: $response, ${response.errorBody()!!.string()}")
@@ -159,7 +157,6 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = aws.getUser(userName, userRn)
-                Log.d("swag", "getUser: $response, ${response.body()}")
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
                     Log.e(Repository::class.java.simpleName, "getUser: $response, ${response.errorBody()!!.string()}")
@@ -185,7 +182,6 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = aws.updateUser(userName, body)
-                Log.d("swag", "updateUser: $response, ${response.body()}")
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
                     Log.e(Repository::class.java.simpleName, "updateUser: $response, ${response.errorBody()!!.string()}")
@@ -211,7 +207,6 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = aws.deleteUser(userName, body)
-                Log.d("swag", "deleteUser: $response, ${response.body()}")
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
                     Log.e(Repository::class.java.simpleName, "deleteUser: $response, ${response.errorBody()!!.string()}")
@@ -240,7 +235,6 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = aws.checkUserAuthorized(userName, body)
-                Log.d("swag", "checkUserAuthorized: $response, ${response.body()}")
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
                     Log.e(Repository::class.java.simpleName, "checkUserAuthorized: $response, ${response.errorBody()!!.string()}")
@@ -266,7 +260,6 @@ class AWSRepo(retrofit: Retrofit) : Repository() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = aws.updateUserPassword(userName, body)
-                Log.d("swag", "updateUserPassword: $response, ${response.body()}")
                 if (!response.isSuccessful) {
                     // Caller should handle error responses
                     Log.e(Repository::class.java.simpleName, "updateUserPassword: $response, ${response.errorBody()!!.string()}")

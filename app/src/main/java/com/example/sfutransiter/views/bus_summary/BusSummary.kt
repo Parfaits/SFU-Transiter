@@ -14,11 +14,9 @@ import com.example.sfutransiter.backend.RetrofitAPI
 import com.example.sfutransiter.databinding.FragmentBusSummaryBinding
 import com.example.sfutransiter.model.Bus
 import com.example.sfutransiter.model.StopEstimate
-import com.example.sfutransiter.model.User
 import com.example.sfutransiter.model.view_model.BusReviewViewModel
 import com.example.sfutransiter.model.view_model.MyViewModelFactory
 import com.example.sfutransiter.model.view_model.TransitViewModel
-import com.example.sfutransiter.model.view_model.UserViewModel
 import com.example.sfutransiter.repository.AWSRepo
 import com.example.sfutransiter.repository.TLinkRepo
 import com.example.sfutransiter.views.MainFragment
@@ -61,27 +59,6 @@ class BusSummary : Fragment() {
         val awsViewModelFactory = MyViewModelFactory(awsRepo)
         val awsViewModel =
             ViewModelProvider(this, awsViewModelFactory)[BusReviewViewModel::class.java]
-
-        val userRepo = AWSRepo(RetrofitAPI.getAWSInstance())
-        val userViewModelFactory = MyViewModelFactory(userRepo)
-        val userViewModel =
-            ViewModelProvider(this, userViewModelFactory)[UserViewModel::class.java]
-        val b = userViewModel.createUser(
-            User.RequestBody(
-                "ass7",
-                "123",
-                "ass7@dab.com",
-                "SwagLord",
-                "Jesus"
-            )
-        )
-
-        b.observe(this) {
-//            Log.d(TAG, "b: ${Gson().fromJson(it.errorBody()!!.string(), ResponseError::class.java)}")
-            val body = it.body()!!
-//            userViewModel.updateUserPassword(body.userName, User.RequestBodyAuth("123", "swag"))
-            userViewModel.checkUserAuthorized(body.userName, User.RequestBodyAuth("123"))
-        }
     }
 
     override fun onCreateView(
