@@ -1,6 +1,5 @@
 package com.example.sfutransiter.model
 
-import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
@@ -16,7 +15,6 @@ data class ResponseError(
     companion object {
         @JvmStatic
         fun fromJsonString(json: String): ResponseError {
-            Log.d("swag", "fromJsonString: $json")
             return Gson().fromJson(json, ResponseError::class.java)
         }
     }

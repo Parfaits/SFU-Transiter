@@ -68,7 +68,7 @@
         android:fontFamily="@font/maru_regular"
         android:text="@string/or_log_in"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/editEmail"
+        app:layout_constraintBottom_toTopOf="@+id/editUsername"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
@@ -90,20 +90,21 @@
         tools:ignore="TextFields" />
 
     <EditText
-        android:id="@+id/editEmail"
+        android:id="@+id/editUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:layout_marginHorizontal="64dp"
         android:fontFamily="@font/maru_regular"
-        android:hint="@string/email_example_com"
+        android:hint="@string/username"
         android:importantForAutofill="no"
         android:inputType="textEmailAddress"
         android:textColorHint="#757575"
         app:layout_constraintBottom_toTopOf="@+id/editPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="LabelFor" />
 
     <android.widget.Button
         android:id="@+id/btn_login"
