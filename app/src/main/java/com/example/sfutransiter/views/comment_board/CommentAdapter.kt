@@ -29,7 +29,7 @@ class CommentAdapter : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        //TODO wait until AWS is back up
+        //TODO wait until AWS is back upa
         //return myComments.size
         return 5
     }
