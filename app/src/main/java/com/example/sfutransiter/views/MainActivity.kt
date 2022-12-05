@@ -48,6 +48,11 @@ class MainActivity : BaseActivity(),
         shown = true
     }
 
+    override fun onDestroy() {
+        shown = false
+        super.onDestroy()
+    }
+
     private fun showDisclaimerDialog() {
         DoNotShowAgainAlertDialog.Builder().apply {
             setTitle(getString(R.string.disclaimer))
