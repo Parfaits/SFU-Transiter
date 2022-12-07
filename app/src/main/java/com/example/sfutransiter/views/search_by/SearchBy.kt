@@ -1,15 +1,13 @@
 package com.example.sfutransiter.views.search_by
 
-import android.R
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.example.sfutransiter.databinding.FragmentSearchByBinding
 import com.example.sfutransiter.views.MainFragment
 
@@ -37,9 +35,23 @@ class SearchBy : Fragment() {
     ): View? {
         _binding = FragmentSearchByBinding.inflate(inflater, container, false)
 
+        searchBar(binding.searchView)
         setupButtons()
 
         return binding.root
+    }
+
+    private fun searchBar(searchView : SearchView) {
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchByFragmentInterface.swapToBusSummary(searchView.query.toString())
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
     }
 
 
@@ -64,5 +76,6 @@ class SearchBy : Fragment() {
     interface SearchByFragmentInterface {
         fun swapToSelectBus()
         fun swapToSelectStation()
+        fun swapToBusSummary(routeId: String)
     }
 }

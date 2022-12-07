@@ -1,5 +1,6 @@
 package com.example.sfutransiter.views.bus_summary
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -70,12 +71,27 @@ class BusSummary : Fragment() {
     ): View? {
         _binding = FragmentBusSummaryBinding.inflate(inflater, container, false)
 
+        getCommentCount()
         binding.txtBusTitle.text = routeId
         setupRating()
         setupCommentBtn()
         setupList()
 
         return binding.root
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun getCommentCount() {
+        val reviewAWS = awsViewModel.listBusStopReviews(routeId)
+        var comments = "No"
+
+
+        reviewAWS.observe(viewLifecycleOwner) {
+            if (!it.isSuccessful) return@observe
+            val reviewBody = it.body()!!
+            comments = reviewBody.list.size.toString()
+            binding.btnComments.text = "$comments comments"
+        }
     }
 
     private fun setupList() {
